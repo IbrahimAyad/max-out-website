@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { formatPrice } from "@/lib/utils/format";
 import { Truck, CheckCircle, Clock, Package } from "lucide-react";
 
@@ -12,8 +12,8 @@ interface OrderStatus {
 }
 
 export default function OrderTrackingPage() {
-  const params = useParams();
-  const orderId = params.orderId as string;
+  const pathname = usePathname();
+  const orderId = pathname.split('/').pop() as string;
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

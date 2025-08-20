@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -245,8 +245,8 @@ interface BundleItem {
 }
 
 export default function TieProductPage() {
-  const params = useParams();
-  const id = params.id as string;
+  const pathname = usePathname();
+  const id = pathname.split('/').pop() as string;
   const { addItem } = useCart();
 
   // Parse id (e.g., "baby-blue-bowtie" -> color: baby-blue, style: bowtie)

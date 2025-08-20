@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -49,8 +49,8 @@ const categoryData = {
 };
 
 export default function CategoryPage() {
-  const params = useParams();
-  const category = params.category as string;
+  const pathname = usePathname();
+  const category = pathname.split('/').pop() as string;
   const categoryInfo = categoryData[category as keyof typeof categoryData];
   
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');

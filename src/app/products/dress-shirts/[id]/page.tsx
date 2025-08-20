@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -12,9 +12,9 @@ import DressShirtSizeSelector from '@/components/products/DressShirtSizeSelector
 import { useCart } from '@/hooks/useCart';
 
 export default function DressShirtProductPage() {
-  const params = useParams();
+  const pathname = usePathname();
   const router = useRouter();
-  const id = params.id as string;
+  const id = pathname.split('/').pop() as string;
   
   // Parse id (e.g., "navy-slim" -> color: navy, fit: slim)
   const [colorId, fitId] = id.split('-');

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -22,11 +22,11 @@ import { getTuxedoById, tuxedoProducts } from '@/lib/products/tuxedoProducts';
 import { useCart } from '@/hooks/useCart';
 
 export default function TuxedoDetailPage() {
-  const params = useParams();
+  const pathname = usePathname();
   const router = useRouter();
   const { addItem } = useCart();
   
-  const tuxedo = getTuxedoById(params.id as string);
+  const tuxedo = getTuxedoById(pathname.split('/').pop() as string);
   
   const [selectedSize, setSelectedSize] = useState('');
   const [isFavorited, setIsFavorited] = useState(false);

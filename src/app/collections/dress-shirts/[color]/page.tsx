@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -17,8 +17,9 @@ interface ColorParams {
 }
 
 export default function DressShirtColorPage() {
-  const params = useParams() as unknown as ColorParams;
-  const colorData = getDressShirtColorById(params.color);
+  const pathname = usePathname();
+  const color = pathname.split('/').pop() as string;
+  const colorData = getDressShirtColorById(color);
   
   const [selectedFit, setSelectedFit] = useState<string>('slim');
   const [selectedSize, setSelectedSize] = useState<string>('');

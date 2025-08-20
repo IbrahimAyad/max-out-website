@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -17,8 +17,9 @@ interface ColorParams {
 }
 
 export default function TieColorCollectionPage() {
-  const params = useParams() as unknown as ColorParams;
-  const colorId = params.color.replace('-collection', '');
+  const pathname = usePathname();
+  const color = pathname.split('/').pop() as string;
+  const colorId = color.replace('-collection', '');
   const colorData = getTieColorById(colorId);
   const { addItem } = useCart();
   

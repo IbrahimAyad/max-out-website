@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -26,19 +26,20 @@ import { getSuitImage, getShirtImage, getTieImage } from '@/lib/products/bundleI
 import { useCart } from '@/hooks/useCart';
 
 export default function BundleDetailPage() {
-  const params = useParams();
+  const pathname = usePathname();
   const router = useRouter();
   const { addItem } = useCart();
   
   // Check regular bundles, wedding bundles, prom bundles, and casual bundles
-  let bundle = bundleProductsWithImages.bundles.find(b => b.id === params.id);
+  const bundleId = pathname.split('/').pop() as string;
+  let bundle = bundleProductsWithImages.bundles.find(b => b.id === bundleId);
   let isWeddingBundle = false;
   let isPromBundle = false;
   let isCasualBundle = false;
   
   if (!bundle) {
     // Check wedding bundles
-    const weddingBundle = weddingBundles.bundles.find(b => b.id === params.id);
+    const weddingBundle = weddingBundles.bundles.find(b => b.id === bundleId);
     if (weddingBundle) {
       bundle = {
         ...weddingBundle,
@@ -52,7 +53,7 @@ export default function BundleDetailPage() {
   
   if (!bundle) {
     // Check prom bundles
-    const promBundle = promBundles.bundles.find(b => b.id === params.id);
+    const promBundle = promBundles.bundles.find(b => b.id === bundleId);
     if (promBundle) {
       bundle = {
         ...promBundle,
@@ -66,7 +67,7 @@ export default function BundleDetailPage() {
   
   if (!bundle) {
     // Check casual bundles
-    const casualBundle = casualBundles.bundles.find(b => b.id === params.id);
+    const casualBundle = casualBundles.bundles.find(b => b.id === bundleId);
     if (casualBundle) {
       bundle = {
         ...casualBundle,

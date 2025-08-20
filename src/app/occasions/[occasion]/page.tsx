@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { usePathname, notFound } from "next/navigation";
 import { occasionDetails, OccasionType, OccasionBundle } from "@/lib/types/occasions";
 import { useProducts } from "@/lib/hooks/useProducts";
 import { useCart } from "@/lib/hooks/useCart";
@@ -98,8 +98,8 @@ const mockBundles: Record<OccasionType, OccasionBundle[]> = {
 };
 
 export default function OccasionDetailPage() {
-  const params = useParams();
-  const occasion = params.occasion as OccasionType;
+  const pathname = usePathname();
+  const occasion = pathname.split('/').pop() as OccasionType;
   
   const [selectedBundle, setSelectedBundle] = useState<OccasionBundle | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<Record<string, string>>({});
