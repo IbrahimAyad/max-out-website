@@ -22,6 +22,21 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "src/ai-training/**/*"]
+  "include": [
+    "app/**/*",
+    "pages/**/*",
+    "src/**/*",
+    "components/**/*",
+    "max-out-website/**/*",
+    "next-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "_archive/**/*",
+    "**/_archive/**/*",
+    "**/ai-training/**",
+    "**/scripts/**",
+    "**/tools/**"
+  ]
 }

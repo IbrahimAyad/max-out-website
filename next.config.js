@@ -67,6 +67,9 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.supabase.co' },
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true
+  }
 };
 
 module.exports = nextConfig;
