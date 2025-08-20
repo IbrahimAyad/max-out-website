@@ -1,0 +1,120 @@
+/* Mobile optimizations for Atelier AI Chat */
+
+/* Custom scrollbar for chat messages */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* iOS safe area support */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.pb-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Mobile viewport fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific fixes */
+  .mobile-chat-container {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Touch target improvements */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Mobile chat animations */
+@media screen and (max-width: 768px) {
+  .chat-mobile-slide-up {
+    animation: slideUpMobile 0.3s ease-out;
+  }
+}
+
+@keyframes slideUpMobile {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Voice recording pulse animation */
+.voice-recording-pulse {
+  animation: voicePulse 1.5s infinite;
+}
+
+@keyframes voicePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+/* Enhanced touch feedback */
+.touch-feedback:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* Mobile message bubbles */
+@media screen and (max-width: 640px) {
+  .chat-message {
+    max-width: 85%;
+  }
+  
+  .chat-message-user {
+    margin-left: auto;
+  }
+  
+  .chat-message-ai {
+    margin-right: auto;
+  }
+  
+  /* Mobile chat layout fixes */
+  .mobile-chat-input {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+  
+  /* Ensure chat takes full viewport */
+  .mobile-full-height {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height */
+    min-height: -webkit-fill-available;
+  }
+  
+  /* Fix for iOS keyboard overlap */
+  .mobile-messages-container {
+    height: calc(100vh - 200px);
+    height: calc(100dvh - 200px);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
