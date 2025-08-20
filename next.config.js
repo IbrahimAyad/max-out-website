@@ -54,9 +54,8 @@ const nextConfig = {
       },
     ];
   },
-  // NOTE: DO NOT include `output: 'export'` here.
   images: {
-    // NOTE: DO NOT include `unoptimized: true`.
+    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.kctmenswear.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -67,7 +66,5 @@ const nextConfig = {
   // keep temporary ignore until green, then we'll remove
   typescript: { ignoreBuildErrors: true },
 };
-
-module.exports = nextConfig;
 
 module.exports = nextConfig;
