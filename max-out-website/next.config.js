@@ -58,11 +58,7 @@ const nextConfig = {
     ignoreBuildErrors: true
   },
 
-  // If you're using static export, keep this + unoptimized images.
-  // If you later remove 'export', also remove images.unoptimized.
-  output: 'export',
   images: {
-    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.kctmenswear.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
