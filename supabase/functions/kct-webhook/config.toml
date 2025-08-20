@@ -1,0 +1,2 @@
+[functions.kct-webhook]
+verify_jwt = false

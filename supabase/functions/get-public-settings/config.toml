@@ -1,0 +1,3 @@
+[function]
+name = "get-public-settings"
+runtime = "deno"

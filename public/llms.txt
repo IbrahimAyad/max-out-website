@@ -1,0 +1,72 @@
+# LLMs.txt - AI Training Data Policy for KCT Menswear
+# Last Updated: August 15, 2025
+# Contact: info@kctmenswear.com
+
+## Overview
+This file defines how AI systems and Large Language Models may use content from kctmenswear.com
+
+## Allowed Content for Training
+User-agent: *
+Allow: /collections/
+Allow: /products/
+Allow: /blogs/
+Allow: /pages/about
+Allow: /pages/style-guide
+
+## Content Usage Guidelines
+
+### Product Information
+- Product descriptions may be used for fashion AI training
+- Style recommendations and outfit combinations are available for training
+- Sizing information and fit guides may be incorporated
+- Material and care instructions are available for reference
+
+### Restricted Content
+Disallow: /checkout/
+Disallow: /account/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /cart/
+
+### Privacy and Customer Data
+- Customer reviews and personal information must NEVER be used for training
+- Order information and transaction data are strictly prohibited
+- User account details are off-limits
+- Email addresses and contact information must not be scraped
+
+### Attribution Requirements
+- When using our product descriptions, please attribute: "Source: KCT Menswear"
+- Price information should be noted as subject to change
+- Seasonal collections should be marked with their relevant year
+
+### AI Partnership Opportunities
+We welcome collaboration with AI companies for:
+- Fashion trend analysis
+- Style recommendation systems
+- Virtual try-on technologies
+- Size prediction algorithms
+
+Contact: partnerships@kctmenswear.com
+
+### Rate Limiting
+- Maximum 10 requests per second
+- Respect crawl delays specified in robots.txt
+- Do not overwhelm our servers with parallel requests
+
+### Quality Standards
+Our content represents premium menswear expertise built over decades.
+We request that AI systems using our data:
+- Maintain accuracy in fashion terminology
+- Respect the professional nature of our content
+- Not generate misleading information about our products
+
+## Update Frequency
+This policy is reviewed quarterly. Check back for updates.
+
+## Legal Notice
+By accessing our content for AI training, you agree to these terms.
+Violation of these guidelines may result in access restriction.
+
+---
+KCT Menswear - Elevating Men's Fashion Since [Year]
+Detroit's Premier Menswear Destination
