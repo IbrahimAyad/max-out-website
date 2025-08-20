@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
+import type { NextFunction } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import { conversationalAI, ConversationContext } from '../models/conversational-ai';
