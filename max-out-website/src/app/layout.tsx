@@ -16,7 +16,7 @@ import { Suspense } from "react";
 import { socialMediaSchema } from "./layout/social-schema";
 import { SkipLinks } from "@/components/accessibility/SkipLinks";
 import MobileBottomNav from "@/components/mobile/MobileBottomNav";
-import { ServiceWorkerRegistry } from "@/components/pwa/ServiceWorkerRegistry";
+import KillSW from "./_kill-sw";
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -90,6 +90,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <SkipLinks />
+        <KillSW />
         {/* <PostHogProvider> */}
           <Providers>
             <Navigation />
@@ -101,7 +102,6 @@ export default function RootLayout({
             {/* <StyleConsultantButton /> */}
             <SimpleCartDrawer />
             <MobileBottomNav />
-            <ServiceWorkerRegistry />
             <Suspense fallback={null}>
               {/* <PostHogPageview /> */}
               <GoogleAnalytics />
