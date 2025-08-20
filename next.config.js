@@ -54,12 +54,9 @@ const nextConfig = {
       },
     ];
   },
-
-  // If you are doing static export, leave this.
-  // If you want Next's image optimizer, REMOVE "output: 'export'".
-  output: 'export',
+  // NOTE: DO NOT include `output: 'export'` here.
   images: {
-    unoptimized: true, // prevent 404s from Next/Image in static export
+    // NOTE: DO NOT include `unoptimized: true`.
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.kctmenswear.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -67,9 +64,10 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.supabase.co' },
     ],
   },
-  typescript: {
-    ignoreBuildErrors: true
-  }
+  // keep temporary ignore until green, then we'll remove
+  typescript: { ignoreBuildErrors: true },
 };
+
+module.exports = nextConfig;
 
 module.exports = nextConfig;
