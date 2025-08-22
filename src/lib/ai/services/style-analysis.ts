@@ -9,13 +9,21 @@ import type {
   BudgetTier
 } from '../types'
 
-// Initialize Supabase only if environment variables are available (not during build)
-const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) 
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
-  : null
+// Create Supabase client with build-time guard
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    // Return null during build time
+    if (typeof window === 'undefined' && !process.env.VERCEL) {
+      return null;
+    }
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseAnonKey);
+}
 
 export class StyleAnalysisService {
   private openaiApiKey: string
@@ -223,6 +231,12 @@ export class StyleAnalysisService {
   }
 
   private async searchProductsByStyle(analysis: StyleAnalysis): Promise<any[]> {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      // Return empty array during build time
+      return [];
+    }
+    
     const matchingProducts = []
     
     // If we have Fashion CLIP embeddings, use them for similarity search
@@ -343,6 +357,17 @@ export class StyleAnalysisService {
     analysis: StyleAnalysis, 
     matchingProducts: any[]
   ): Promise<CompleteOutfit> {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      // Return empty outfit during build time
+      return {
+        items: [],
+        totalPrice: 0,
+        missingPieces: [],
+        alternativeOptions: []
+      };
+    }
+    
     const essentialCategories = this.getEssentialCategories(analysis.occasionType)
     const includedCategories = new Set(analysis.detectedItems.map(item => item.category))
     const missingCategories = essentialCategories.filter(cat => !includedCategories.has(cat))
