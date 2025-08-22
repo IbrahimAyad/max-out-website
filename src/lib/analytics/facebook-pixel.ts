@@ -8,7 +8,7 @@ declare global {
 
 // Facebook App Configuration - Use environment variables for security
 const FB_APP_ID = process.env.NEXT_PUBLIC_FB_APP_ID || '';
-const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || '';
+const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || '1409898642574301'; // Fallback to known working ID
 const FB_API_VERSION = process.env.NEXT_PUBLIC_FB_API_VERSION || 'v22.0';
 const FB_CLIENT_TOKEN = process.env.NEXT_PUBLIC_FB_CLIENT_TOKEN || '';
 const FB_DATASET_ID = process.env.NEXT_PUBLIC_FB_DATASET_ID || '';
@@ -41,6 +41,12 @@ export const initializeFacebookSDK = () => {
 // Initialize Facebook Pixel
 export const initializeFacebookPixel = () => {
   if (typeof window === 'undefined') return;
+  
+  // Skip if Pixel ID is not available
+  if (!FB_PIXEL_ID || FB_PIXEL_ID === 'null' || FB_PIXEL_ID === '') {
+    console.warn('Facebook Pixel ID not configured');
+    return;
+  }
 
   // Facebook Pixel Code
   !function(f,b,e,v,n,t,s) {

@@ -70,7 +70,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       name: "Black Tuxedo", 
       category: "tuxedos", 
       base_price: 799.99,
-      image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=500&q=80",
+      image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80",
       description: "Perfect for special occasions"
     },
     {
@@ -131,7 +131,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       id: "video-4",
       title: "Business Excellence",
       description: "Command respect in every boardroom",
-      image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=500&q=80"
+      image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80"
     }
   ];
 
@@ -181,7 +181,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
               {
                 title: "Evening Wear",
                 subtitle: "Sophistication for special occasions",
-                image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=800&q=85",
+                image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=85",
                 href: "/collections/prom"
               }
             ].map((collection, index) => (

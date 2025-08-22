@@ -40,7 +40,7 @@ async function getInitialProducts() {
       name: "Black Tuxedo", 
       category: "tuxedos", 
       base_price: 799.99,
-      image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=500&q=80",
+      image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80",
       description: "Perfect for special occasions"
     },
     {

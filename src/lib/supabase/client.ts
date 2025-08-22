@@ -5,6 +5,14 @@ import type { Database } from './database.types'
 // Singleton instance for consistent client usage
 let supabaseInstance: any = null
 
+import { createBrowserClient } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
+import type { Database } from './database.types'
+
+// Singleton instances for consistent client usage
+let browserClientInstance: any = null
+let supabaseInstance: any = null
+
 export function createClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -17,7 +25,19 @@ export function createClient() {
     throw new Error('Missing Supabase environment variables')
   }
 
-  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  // Return singleton instance for browser
+  if (typeof window !== 'undefined' && browserClientInstance) {
+    return browserClientInstance
+  }
+
+  const client = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  
+  // Store singleton instance for browser
+  if (typeof window !== 'undefined') {
+    browserClientInstance = client
+  }
+  
+  return client
 }
 
 // Singleton getter for shared service usage
