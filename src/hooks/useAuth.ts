@@ -3,13 +3,17 @@ import { useCustomerStore } from '@/store/customerStore'
 import { createClient } from '@supabase/supabase-js'
 import type { CustomerProfile, LoyaltyTier } from '@/lib/customer/types'
 
-// Initialize Supabase only if environment variables are available (not during build)
-const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) 
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
-  : null
+// Create Supabase client with build-time guard
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseAnonKey);
+}
 
 export function useAuth() {
   const { login, logout, profile, isAuthenticated } = useCustomerStore()
@@ -19,6 +23,7 @@ export function useAuth() {
     checkSession()
 
     // Listen for auth changes
+    const supabase = getSupabaseClient();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === 'SIGNED_IN' && session) {
@@ -35,6 +40,7 @@ export function useAuth() {
   }, [])
 
   const checkSession = async () => {
+    const supabase = getSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession()
     if (session) {
       await handleSignIn(session.user.id, session.user.email!)
@@ -43,6 +49,7 @@ export function useAuth() {
 
   const handleSignIn = async (userId: string, email: string) => {
     try {
+      const supabase = getSupabaseClient();
       // Fetch user profile from database
       const { data: profileData, error } = await supabase
         .from('customer_profiles')

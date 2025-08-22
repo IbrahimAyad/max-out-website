@@ -3,13 +3,21 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-// Initialize Supabase only if environment variables are available (not during build)
-const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) 
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
-  : null
+// Create Supabase client with build-time guard
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    // Return null during build time - metrics will be disabled
+    if (typeof window === 'undefined' && !process.env.VERCEL) {
+      return null;
+    }
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseAnonKey);
+}
 
 export interface ConversationMetric {
   sessionId: string
@@ -129,6 +137,13 @@ export class MetricsCollector {
   async flush() {
     if (this.buffer.length === 0) return
     
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      // Metrics disabled during build or when env vars missing
+      this.buffer = [];
+      return;
+    }
+    
     const metricsToSave = [...this.buffer]
     this.buffer = []
     
@@ -160,6 +175,11 @@ export class MetricsCollector {
   
   // Get agent performance metrics
   async getAgentMetrics(agentName: string, period: '24h' | '7d' | '30d'): Promise<AgentMetric> {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return this.getEmptyAgentMetric(agentName, period);
+    }
+    
     const startDate = this.getStartDate(period)
     
     const { data, error } = await supabase
@@ -177,6 +197,11 @@ export class MetricsCollector {
   
   // Get conversation trends
   async getConversationTrends(period: '24h' | '7d' | '30d') {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return [];
+    }
+    
     const startDate = this.getStartDate(period)
     
     const { data, error } = await supabase
@@ -194,6 +219,11 @@ export class MetricsCollector {
   
   // Get top performing responses
   async getTopResponses(limit = 10): Promise<ResponseMetric[]> {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return [];
+    }
+    
     const { data, error } = await supabase
       .from('ai_response_metrics')
       .select('*')

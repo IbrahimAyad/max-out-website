@@ -3,13 +3,17 @@ import { ConversationalAI } from '@/lib/ai/services/conversational-ai'
 import { createClient } from '@supabase/supabase-js'
 import type { ConversationContext, Message } from '@/lib/ai/types'
 
-// Initialize Supabase only if environment variables are available (not during build)
-const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) 
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
-  : null
+// Create Supabase client with build-time guard
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseAnonKey);
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,6 +25,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Get Supabase client
+    const supabase = getSupabaseClient();
 
     // Initialize AI service
     const conversationalAI = new ConversationalAI()
@@ -145,6 +152,9 @@ export async function GET(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Get Supabase client
+    const supabase = getSupabaseClient();
 
     const { data: history, error } = await supabase
       .from('chat_history')
