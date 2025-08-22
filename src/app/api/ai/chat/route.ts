@@ -3,10 +3,13 @@ import { ConversationalAI } from '@/lib/ai/services/conversational-ai'
 import { createClient } from '@supabase/supabase-js'
 import type { ConversationContext, Message } from '@/lib/ai/types'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Initialize Supabase only if environment variables are available (not during build)
+const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) 
+  ? createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    )
+  : null
 
 export async function POST(request: NextRequest) {
   try {

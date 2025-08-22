@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+// Initialize Stripe only if the secret key is available (not during build)
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-11-20.acacia',
-});
+}) : null;
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if Stripe is available (prevents build errors)
+    if (!stripe) {
+      return NextResponse.json({
+        success: false,
+        error: 'Payment processing is not available',
+        message: 'Stripe not configured for testing'
+      }, { status: 503 });
+    }
+
     const supabase = await createClient();
     
     // Test with the specific products from the guide

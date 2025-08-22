@@ -5,6 +5,15 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
+// Initialize Supabase only if available (prevents build errors)
+const getSupabaseClient = () => {
+  try {
+    return createClient();
+  } catch {
+    return null;
+  }
+};
+
 // Define the collections that map to our master collections and database
 const collectionsConfig = [
   // Row 1 - Main Product Categories

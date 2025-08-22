@@ -5,9 +5,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@/lib/supabase/server';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+// Initialize Stripe only if the secret key is available (not during build)
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20',
-});
+}) : null;
 
 // Price tier definitions (will become Stripe products later)
 const PRICE_TIERS = {
@@ -35,6 +36,14 @@ const PRICE_TIERS = {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe is available (prevents build errors)
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not available' },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
     const { productId, quantity = 1, size, successUrl, cancelUrl } = body;
 

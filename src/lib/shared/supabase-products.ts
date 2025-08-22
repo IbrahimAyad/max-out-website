@@ -4,10 +4,10 @@
  * Last updated: 2024-08-05
  */
 
-import { getSupabaseClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 // Get the singleton Supabase client
-const supabase = getSupabaseClient();
+const supabase = createClient();
 
 // Product type that both projects will use
 export interface Product {

@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@/lib/supabase/server';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+// Initialize Stripe only if the secret key is available (not during build)
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20',
-});
+}) : null;
 
 interface CartItem {
   id: string;
@@ -20,6 +21,14 @@ interface CartItem {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe is available (prevents build errors)
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not available' },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
     const { items, customerEmail, successUrl, cancelUrl } = body;
 
@@ -229,6 +238,14 @@ export async function POST(request: NextRequest) {
 // Express checkout endpoint for single products
 export async function PUT(request: NextRequest) {
   try {
+    // Check if Stripe is available (prevents build errors)
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not available' },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
     const { productId, quantity = 1, size, enhanced = false } = body;
 
