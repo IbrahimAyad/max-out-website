@@ -4,6 +4,124 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnpm-debug.log*
+
+# Environment Variables & Sensitive Keys
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.env
+.envrc
+
+# API Keys & Secrets
+api-keys.json
+secrets.json
+credentials.json
+config/keys.js
+config/secrets.js
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cert
+*.csr
+*.der
+*.jks
+*.keystore
+
+# Database & Service Account Files
+service-account*.json
+google-credentials.json
+firebase-adminsdk*.json
+supabase-service-role-key.json
+database.json
+
+# Cloudflare & Worker Keys
+wrangler.toml.local
+.dev.vars
+cloudflare-api-key.txt
+worker-secrets.json
+
+# AWS & Cloud Provider Keys
+.aws/
+aws-exports.js
+aws-config.json
+*.pem
+*.ppk
+
+# SSH Keys
+id_rsa*
+id_ed25519*
+id_ecdsa*
+known_hosts
+.ssh/
+
+# JWT & Authentication
+jwt-secret.txt
+auth-keys.json
+token.json
+refresh-token.json
+
+# Next.js Build Output
+.next/
+.next/*
+out/
+build/
+dist/
+
+# Vercel
+.vercel
+.vercel.json
+
+# Testing
+/coverage
+/.nyc_output
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs
+*.log.*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Temporary folders
+tmp/
+temp/
+yarn-debug.log*
+yarn-error.log*
 
 # Next.js build files
 .next/
