@@ -145,7 +145,8 @@ const TrendingNowCarousel = ({
     if (product.images?.gallery?.[0]?.cdn_url) return product.images.gallery[0].cdn_url;
     if (product.image_url) return product.image_url;
     if (product.additional_images?.[0]) return product.additional_images[0];
-    return 'https://cdn.kctmenswear.com/placeholder/product.webp';
+    // Use working placeholder instead of broken CDN URL
+    return '/placeholder-product.svg';
   };
 
   const formatPrice = (price: number): string => {

@@ -3,6 +3,12 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils/cn'
+import { 
+  getImageWithFallback, 
+  createImageErrorHandler, 
+  isValidImageUrl 
+} from '@/lib/utils/image-fallback'
+import { ImageErrorBoundary } from './ImageErrorBoundary'
 
 interface ProductImageProps {
   src: string | undefined
@@ -15,6 +21,8 @@ interface ProductImageProps {
   priority?: boolean
   onLoad?: () => void
   onError?: () => void
+  category?: string
+  productType?: string
 }
 
 export function ProductImage({
@@ -27,56 +35,35 @@ export function ProductImage({
   height,
   priority = false,
   onLoad,
-  onError
+  onError,
+  category,
+  productType
 }: ProductImageProps) {
   const [imageError, setImageError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    // Prevent console error logging for expected external image failures
-    e.preventDefault()
-    setImageError(true)
-    setIsLoading(false)
-    onError?.()
-  }
+  const handleImageError = createImageErrorHandler(
+    getImageWithFallback(null, { category, productType, useLocalPlaceholder: true }),
+    () => {
+      setImageError(true)
+      setIsLoading(false)
+      onError?.()
+    }
+  )
 
   const handleImageLoad = () => {
     setIsLoading(false)
     onLoad?.()
   }
 
-  // Get valid image URL with fallbacks
-  const getValidImageUrl = (url: string | undefined): string => {
-    if (!url || url.trim() === '') return '/placeholder-product.svg'
-    
-    // Check for common invalid patterns
-    if (url === 'image' || url === 'about' || url === 'favorites' || url === 'pattern.svg') {
-      return '/placeholder-product.svg'
-    }
-    
-    // Check if URL looks valid
-    try {
-      const urlObj = new URL(url)
-      // Only allow http/https URLs for external images
-      if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
-        return url
-      }
-      return '/placeholder-product.svg'
-    } catch {
-      // If not a valid URL, check if it's a valid relative path
-      if (url.startsWith('/') && !url.includes('..')) {
-        // Check if it's a known valid local image
-        const validLocalImages = ['/placeholder-product.svg', '/placeholder-suit.jpg', '/placeholder-shirt.jpg', '/placeholder-shoes.jpg', '/placeholder-tie.jpg']
-        if (validLocalImages.includes(url)) {
-          return url
-        }
-      }
-      return '/placeholder-product.svg'
-    }
-  }
-
-  const imageSrc = imageError ? '/placeholder-product.svg' : getValidImageUrl(src)
-  const isPlaceholder = imageError || imageSrc === '/placeholder-product.svg'
+  // Get valid image URL with comprehensive fallbacks
+  const imageSrc = getImageWithFallback(src, { 
+    category, 
+    productType,
+    useLocalPlaceholder: imageError 
+  })
+  
+  const isPlaceholder = imageError || !isValidImageUrl(src)
 
   const imageProps = {
     src: imageSrc,
@@ -95,29 +82,42 @@ export function ProductImage({
   }
 
   return (
-    <div className={cn("relative", fill && "w-full h-full")}>
-      {/* Loading skeleton */}
-      {isLoading && (
-        <div className={cn(
-          'absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse',
-          fill && 'w-full h-full'
-        )} />
-      )}
-      
-      {/* Image */}
-      {fill ? (
-        <Image
-          {...imageProps}
-          fill
-          style={{ objectFit: className?.includes('object-contain') ? 'contain' : 'cover' }}
-        />
-      ) : (
-        <Image
-          {...imageProps}
-          width={width || 300}
-          height={height || 400}
-        />
-      )}
-    </div>
+    <ImageErrorBoundary
+      fallback={
+        <div className={cn("flex items-center justify-center bg-gray-100 rounded-lg", fill && "w-full h-full")}>
+          <div className="text-center text-gray-500 p-4">
+            <svg className="w-8 h-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="text-xs">Image unavailable</p>
+          </div>
+        </div>
+      }
+    >
+      <div className={cn("relative", fill && "w-full h-full")}>
+        {/* Loading skeleton */}
+        {isLoading && (
+          <div className={cn(
+            'absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse',
+            fill && 'w-full h-full'
+          )} />
+        )}
+        
+        {/* Image */}
+        {fill ? (
+          <Image
+            {...imageProps}
+            fill
+            style={{ objectFit: className?.includes('object-contain') ? 'contain' : 'cover' }}
+          />
+        ) : (
+          <Image
+            {...imageProps}
+            width={width || 300}
+            height={height || 400}
+          />
+        )}
+      </div>
+    </ImageErrorBoundary>
   )
 }

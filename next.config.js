@@ -13,7 +13,8 @@ const ContentSecurityPolicy = `
     https://*.supabase.co
     https://*.railway.app
     https://images.unsplash.com
-    https://www.facebook.com;
+    https://www.facebook.com
+    https://connect.facebook.net;
   font-src 'self' data: https://fonts.gstatic.com;
   connect-src 'self'
     https://*.supabase.co

@@ -109,7 +109,7 @@ function HeroSection({ products }: { products: any[] }) {
               <img
                 src={currentProduct.images?.hero?.url || 
                      currentProduct.images?.primary?.cdn_url || 
-                     '/placeholder-product.jpg'}
+                     '/placeholder-product.svg'}
                 alt={currentProduct.name}
                 className="w-full h-full object-cover"
               />

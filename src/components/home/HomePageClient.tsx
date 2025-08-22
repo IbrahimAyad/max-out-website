@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { ProductImage } from "@/components/ui/ProductImage";
 import { ArrowRight, Play, Star, ShoppingCart, Heart, CheckCircle, Phone, MapPin, Clock, Sparkles } from "lucide-react";
 import { EnhancedProductCard } from "@/components/products/enhanced/EnhancedProductCard";
 import TrendingNowCarousel from "@/components/home/TrendingNowCarousel";
@@ -69,7 +70,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       name: "Black Tuxedo", 
       category: "tuxedos", 
       base_price: 799.99,
-      image: "https://images.unsplash.com/photo-1521505772811-d7e4ec1b5c7b?w=500&q=80",
+      image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=500&q=80",
       description: "Perfect for special occasions"
     },
     {
@@ -130,7 +131,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       id: "video-4",
       title: "Business Excellence",
       description: "Command respect in every boardroom",
-      image: "https://images.unsplash.com/photo-1521505772811-d7e4ec1b5c7b?w=500&q=80"
+      image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=500&q=80"
     }
   ];
 
@@ -182,7 +183,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
               {
                 title: "Evening Wear",
                 subtitle: "Sophistication for special occasions",
-                image: "https://images.unsplash.com/photo-1521505772811-d7e4ec1b5c7b?w=800&q=85",
+                image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=800&q=85",
                 href: "/collections/prom"
               }
             ].map((collection, index) => (
@@ -308,13 +309,13 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                   className="group cursor-pointer"
                 >
                   <div className="image-container aspect-3-4 overflow-hidden bg-white shadow-lg mb-4">
-                    <Image
+                    <ProductImage
                       src={product.image || `https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80`}
                       alt={product.name}
-                      fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 33vw"
                       priority={index < 3}
+                      category={product.category}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                   </div>

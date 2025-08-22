@@ -93,7 +93,7 @@ export function extractProductImages(product: any): ProductImage[] {
   // Return placeholder if no images found
   if (images.length === 0) {
     images.push({
-      url: '/placeholder-product.jpg',
+      url: '/placeholder-product.svg',
       alt: 'No image available'
     });
   }
@@ -108,7 +108,7 @@ export function extractProductImages(product: any): ProductImage[] {
  */
 export function getPrimaryImageUrl(product: any): string {
   const images = extractProductImages(product);
-  return images[0]?.url || '/placeholder-product.jpg';
+  return images[0]?.url || '/placeholder-product.svg';
 }
 
 /**
