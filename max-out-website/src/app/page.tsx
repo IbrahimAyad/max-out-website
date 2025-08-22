@@ -280,7 +280,7 @@ export default function HomePage() {
               {
                 title: "Evening Wear",
                 subtitle: "Sophistication for special occasions",
-                image: "https://images.unsplash.com/photo-1521505772811-d7e4ec1b5c7b?w=800&q=80",
+                image: "https://images.unsplash.com/photo-1562094644-c37de8614025?w=800&q=80",
                 href: "/collections/prom"
               }
             ].map((collection, index) => (
