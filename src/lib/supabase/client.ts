@@ -2,7 +2,6 @@ import { createBrowserClient } from '@supabase/ssr'
 import type { Database } from './database.types'
 
 // Global singleton instance for browser client to prevent multiple instances
-// Fixed: Removed duplicate imports and consolidated client creation
 let browserClientInstance: any = null
 
 export function createClient() {
