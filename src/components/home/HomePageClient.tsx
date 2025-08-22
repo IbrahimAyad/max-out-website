@@ -140,33 +140,31 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
   return (
     <>
       {/* Hugo Boss Inspired Trending Carousel */}
-      <div className="section-container">
-        <TrendingNowCarousel 
-          products={products} 
-          title="Trending Now"
-          subtitle="Discover what's capturing attention"
-        />
-      </div>
+      <TrendingNowCarousel 
+        products={products.map(p => ({ ...p, id: String(p.id) }))} 
+        title="Trending Now"
+        subtitle="Discover what's capturing attention"
+      />
 
       {/* Luxury Collections Grid */}
-      <section className="responsive-section bg-gray-50">
-        <div className="container">
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16 text-container"
+            className="text-center mb-16"
           >
-            <h2 className="responsive-heading font-light text-gray-900 mb-6 tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight">
               Signature Collections
             </h2>
             <div className="w-16 h-px bg-gray-900 mx-auto mb-8" />
-            <p className="responsive-text text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
               Curated selections for every occasion, crafted with uncompromising quality
             </p>
           </motion.div>
 
-          <div className="responsive-grid stable-grid">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
             {[
               {
                 title: "Wedding Suits",
@@ -196,7 +194,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                 className="group cursor-pointer"
               >
                 <Link href={collection.href}>
-                  <div className="image-container aspect-3-4 overflow-hidden mb-8 bg-gray-100 shadow-xl">
+                  <div className="relative aspect-[3/4] overflow-hidden mb-8 bg-gray-100 shadow-xl">
                     <Image
                       src={collection.image}
                       alt={collection.title}
@@ -206,7 +204,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                       priority={index === 0}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-6 left-6 right-6 text-container">
+                    <div className="absolute bottom-6 left-6 right-6">
                       <h3 className="text-2xl md:text-3xl font-light text-white mb-2 tracking-wide">
                         {collection.title}
                       </h3>
@@ -223,24 +221,24 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       </section>
 
       {/* Luxury Video Showcase - Using Images Instead of Videos */}
-      <section className="responsive-section bg-white">
-        <div className="container">
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16 text-container"
+            className="text-center mb-16"
           >
-            <h2 className="responsive-heading font-light text-gray-900 mb-6 tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight">
               Craftsmanship Stories
             </h2>
             <div className="w-16 h-px bg-gray-900 mx-auto mb-8" />
-            <p className="responsive-text text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
               Behind every piece lies exceptional artistry and decades of experience
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 stable-grid">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
             {luxuryVideos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -274,31 +272,31 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       </section>
 
       {/* Featured Products - Enhanced Grid */}
-      <section className="responsive-section bg-gray-50">
-        <div className="container">
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16 text-container"
+            className="text-center mb-16"
           >
-            <h2 className="responsive-heading font-light text-gray-900 mb-6 tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight">
               Featured Pieces
             </h2>
             <div className="w-16 h-px bg-gray-900 mx-auto mb-8" />
-            <p className="responsive-text text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
               Handpicked selections from our master craftsmen, showcasing the finest in contemporary menswear
             </p>
           </motion.div>
 
           {loading || !isHydrated ? (
-            <div className="responsive-grid stable-grid">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="aspect-3-4 loading-placeholder" />
+                <div key={i} className="aspect-[3/4] bg-gray-200 animate-pulse" />
               ))}
             </div>
           ) : (
-            <div className="responsive-grid stable-grid mb-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-12">
               {featuredProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
@@ -308,7 +306,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                   transition={{ delay: index * 0.1 }}
                   className="group cursor-pointer"
                 >
-                  <div className="image-container aspect-3-4 overflow-hidden bg-white shadow-lg mb-4">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-white shadow-lg mb-4">
                     <ProductImage
                       src={product.image || `https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80`}
                       alt={product.name}
@@ -319,7 +317,7 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                   </div>
-                  <div className="space-y-2 text-container">
+                  <div className="space-y-2">
                     <h3 className="text-lg md:text-xl font-light text-gray-900 tracking-wide">
                       {product.name}
                     </h3>
