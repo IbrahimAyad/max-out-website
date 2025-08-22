@@ -8,13 +8,21 @@ import type {
 } from '../types'
 import { EnhancedProduct } from '@/lib/supabase/types'
 
-// Initialize Supabase only if environment variables are available (not during build)
-const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) 
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
-  : null
+// Create Supabase client with build-time guard
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    // Return null during build time
+    if (typeof window === 'undefined' && !process.env.VERCEL) {
+      return null;
+    }
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseAnonKey);
+}
 
 // Occasion-specific outfit templates
 const OUTFIT_TEMPLATES: Record<OccasionType, string[]> = {
@@ -80,6 +88,12 @@ export class OutfitRecommendationEngine {
     context: RecommendationContext
   ): Promise<EnhancedProduct[]> {
     try {
+      const supabase = getSupabaseClient();
+      if (!supabase) {
+        // Return empty array during build time
+        return [];
+      }
+      
       // Build query based on context
       let query = supabase
         .from('products')
