@@ -1,0 +1,41 @@
+name = "kct-r2-migration"
+main = "src/index-migration.js"
+compatibility_date = "2024-01-01"
+
+# Account ID
+account_id = "ea644c4a47a499ad4721449cbac587f4"
+
+# Source bucket (your current bucket)
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "kct-products"
+
+# Destination bucket (the bucket you want to migrate to)
+[[r2_buckets]]
+binding = "DEST_BUCKET"
+bucket_name = "kct-products-new"  # Change this to your destination bucket name
+
+# Optional: Additional buckets for multi-bucket operations
+# [[r2_buckets]]
+# binding = "BACKUP_BUCKET"
+# bucket_name = "kct-products-backup"
+
+# Environment variables
+[vars]
+CDN_URL = "https://cdn.kctmenswear.com/"
+SUPABASE_URL = "https://gvcswimqaxvylgxbklbz.supabase.co"
+
+# Secrets (set these via wrangler secret put)
+# SUPABASE_SERVICE_KEY - Your Supabase service role key
+# Run: wrangler secret put SUPABASE_SERVICE_KEY
+
+# Development settings
+[dev]
+port = 8788
+local_protocol = "http"
+
+# Deployment settings
+[deploy]
+routes = [
+  { pattern = "kct-migration.workers.dev/*" }
+]

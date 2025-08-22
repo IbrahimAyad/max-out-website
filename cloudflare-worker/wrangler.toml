@@ -1,0 +1,47 @@
+name = "kct-r2-supabase-sync"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Account ID - Replace with your actual account ID
+account_id = "ea644c4a47a499ad4721449cbac587f4"
+
+# Source bucket (current bucket)
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "kct-products"
+
+# Destination bucket for migrations (create this bucket first in R2)
+# Uncomment these lines when you create a destination bucket:
+# [[r2_buckets]]
+# binding = "R2_BUCKET_DESTINATION"
+# bucket_name = "kct-products-migrated"  # Change this to your destination bucket name
+
+# Optional: KV namespace for tracking migration status
+# [[kv_namespaces]]
+# binding = "MIGRATION_STATUS"
+# id = "your_kv_namespace_id"  # Create in Cloudflare Dashboard → Workers → KV
+
+# Environment variables
+[vars]
+CDN_URL = "https://cdn.kctmenswear.com/"
+SUPABASE_URL = "https://gvcswimqaxvylgxbklbz.supabase.co"
+
+# Secrets (set these via wrangler secret put)
+# SUPABASE_SERVICE_KEY - Your Supabase service role key
+# Run: wrangler secret put SUPABASE_SERVICE_KEY
+
+# Routes (optional - if you want to use a custom domain)
+# routes = [
+#   { pattern = "sync.kctmenswear.com/*", zone_name = "kctmenswear.com" }
+# ]
+
+# Development settings
+[dev]
+port = 8787
+local_protocol = "http"
+
+# Deployment settings
+[deploy]
+routes = [
+  { pattern = "kct-sync.workers.dev/*" }
+]

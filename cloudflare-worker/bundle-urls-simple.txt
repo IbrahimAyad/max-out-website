@@ -1,0 +1,103 @@
+BUNDLE PRODUCT URLS FOR KCT MENSWEAR
+=====================================
+
+API TO GET ALL URLS:
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls
+
+BUNDLES-AUGUST-2025 / BUNDLE-01 URLS:
+--------------------------------------
+
+black-suit-3p-red.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-3p-red.png
+
+Navy-2p-pink-navy.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/Navy-2p-pink-navy.png
+
+black-2-white-black.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-2-white-black.png
+
+black-3p-white-black.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-3p-white-black.png
+
+black-suit-2p-burnt-orange.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-2p-burnt-orange.png
+
+black-suit-3p-emerald-green.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-3p-emerald-green.png
+
+black-suit-3p-hunter-green.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-3p-hunter-green.png
+
+black-suit-3p-royal-blue-.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-3p-royal-blue-.png
+
+black-suit-black-shirt-Hunter Green.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-black-shirt-Hunter%20Green.png
+
+black-suit-black-shirt-black.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-black-shirt-black.png
+
+black-suit-black-shirt-burnt-orange.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-black-shirt-burnt-orange.png
+
+black-suit-black-shirt-fuschia.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/black-suit-black-shirt-fuschia.png
+
+brown-pink-navy.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/brown-pink-navy.png
+
+burgundy-black-black.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/burgundy-black-black.png
+
+burgundy-black-fusicia.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/burgundy-black-fusicia.png
+
+burgundy-black-mustrard.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/burgundy-black-mustrard.png
+
+dark-grey-white-pink.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/dark-grey-white-pink.png
+
+dark-grey-white-silver.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/dark-grey-white-silver.png
+
+emerlad-green-white-burnt-orange.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/emerlad-green-white-burnt-orange.png
+
+indigo-2p-white-dusty-pink.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/indigo-2p-white-dusty-pink.png
+
+indigo-2p-white-red.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/indigo-2p-white-red.png
+
+indigo-2p-white-sage-green.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/indigo-2p-white-sage-green.png
+
+light-grey-2p-coral.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/light-grey-2p-coral.png
+
+light-grey-2p-light-blue.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/light-grey-2p-light-blue.png
+
+light-grey-2p-pink.png
+https://pub-46371bda6faf4910b74631159fc2dfd4.r2.dev/kct-products/Bundles-Augest-2025/Bundles-01/light-grey-2p-pink.png
+
+
+OTHER BUNDLE CATEGORIES:
+------------------------
+- Bow-Tie
+- Dress Shirts
+- Fall Wedding Bundles
+- Spring Wedding Bundles
+- Summer Wedding Bundles
+- Tuxedo-Bundles
+- casual-bundles
+
+TO GET URLS FOR OTHER CATEGORIES:
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=bow-tie
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=dress-shirts
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=fall-wedding
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=spring-wedding
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=summer-wedding
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=tuxedo-bundles
+https://kct-r2-supabase-sync.kctmenswear.workers.dev/bundle-urls?category=casual-bundles

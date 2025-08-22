@@ -1,0 +1,31 @@
+name = "kct-minimax-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Your Cloudflare account ID
+account_id = "ea644c4a47a499ad4721449cbac587f4"
+
+# R2 bucket bindings - access to ALL buckets
+[[r2_buckets]]
+binding = "MAIN_BUCKET"
+bucket_name = "kct-products"
+
+# Add more buckets as needed
+# [[r2_buckets]]
+# binding = "BACKUP_BUCKET"
+# bucket_name = "kct-backup"
+
+# [[r2_buckets]]
+# binding = "STAGING_BUCKET"
+# bucket_name = "kct-staging"
+
+# Environment variables
+[vars]
+CDN_URL = "https://cdn.kctmenswear.com/"
+SUPABASE_URL = "https://gvcswimqaxvylgxbklbz.supabase.co"
+API_VERSION = "1.0.0"
+
+# Route configuration
+routes = [
+  { pattern = "minimax-api.kctmenswear.com/*", zone_name = "kctmenswear.com" }
+]

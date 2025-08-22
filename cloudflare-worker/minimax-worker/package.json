@@ -1,0 +1,14 @@
+{
+  "name": "kct-minimax-api",
+  "version": "1.0.0",
+  "description": "Minimax API Worker for KCT Menswear",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
