@@ -1,19 +1,15 @@
 import { createBrowserClient } from '@supabase/ssr'
-import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import type { Database } from './database.types'
 
-// Singleton instance for consistent client usage
-let supabaseInstance: any = null
-
-import { createBrowserClient } from '@supabase/ssr'
-import { createClient as createSupabaseClient } from '@supabase/supabase-js'
-import type { Database } from './database.types'
-
-// Singleton instances for consistent client usage
+// Global singleton instance for browser client to prevent multiple instances
 let browserClientInstance: any = null
-let supabaseInstance: any = null
 
 export function createClient() {
+  // Return existing instance if available (browser only)
+  if (typeof window !== 'undefined' && browserClientInstance) {
+    return browserClientInstance
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -25,12 +21,15 @@ export function createClient() {
     throw new Error('Missing Supabase environment variables')
   }
 
-  // Return singleton instance for browser
-  if (typeof window !== 'undefined' && browserClientInstance) {
-    return browserClientInstance
-  }
-
-  const client = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  const client = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+      storageKey: 'kct-auth-session'
+    }
+  })
   
   // Store singleton instance for browser
   if (typeof window !== 'undefined') {
@@ -38,30 +37,6 @@ export function createClient() {
   }
   
   return client
-}
-
-// Singleton getter for shared service usage
-export function getSupabaseClient() {
-  if (!supabaseInstance) {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    
-    if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error('Missing Supabase environment variables')
-    }
-    
-    supabaseInstance = createSupabaseClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-        storageKey: 'kct-auth-session'
-      }
-    })
-  }
-  
-  return supabaseInstance
 }
 
 // Admin client for server-side operations (with service role key)
@@ -74,7 +49,10 @@ export const supabaseAdmin = (() => {
       return null as any
     }
 
-    return createSupabaseClient<Database>(supabaseUrl, supabaseServiceKey, {
+    // Import createClient from supabase-js for admin client
+    const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
+    
+    return createSupabaseClient(supabaseUrl, supabaseServiceKey, {
       auth: {
         autoRefreshToken: false,
         persistSession: false // Admin client doesn't need session persistence
@@ -86,4 +64,4 @@ export const supabaseAdmin = (() => {
 })()
 
 // Export the default client instance as 'supabase' for compatibility
-export const supabase = getSupabaseClient()
+export const supabase = createClient()
