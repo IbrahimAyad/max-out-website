@@ -25,12 +25,18 @@ interface HomePageClientProps {
 export default function HomePageClient({ initialProducts = [] }: HomePageClientProps) {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [loading, setLoading] = useState(initialProducts.length === 0);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Hydration guard
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
-    if (initialProducts.length === 0) {
+    if (initialProducts.length === 0 && isHydrated) {
       loadProducts();
     }
-  }, [initialProducts.length]);
+  }, [initialProducts.length, isHydrated]);
 
   const loadProducts = async () => {
     try {
@@ -133,31 +139,33 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
   return (
     <>
       {/* Hugo Boss Inspired Trending Carousel */}
-      <TrendingNowCarousel 
-        products={products} 
-        title="Trending Now"
-        subtitle="Discover what's capturing attention"
-      />
+      <div className="section-container">
+        <TrendingNowCarousel 
+          products={products} 
+          title="Trending Now"
+          subtitle="Discover what's capturing attention"
+        />
+      </div>
 
       {/* Luxury Collections Grid */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="responsive-section bg-gray-50">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-16 text-container"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight">
+            <h2 className="responsive-heading font-light text-gray-900 mb-6 tracking-tight">
               Signature Collections
             </h2>
             <div className="w-16 h-px bg-gray-900 mx-auto mb-8" />
-            <p className="text-gray-700 text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed">
+            <p className="responsive-text text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
               Curated selections for every occasion, crafted with uncompromising quality
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="responsive-grid stable-grid">
             {[
               {
                 title: "Wedding Suits",
@@ -187,16 +195,17 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                 className="group cursor-pointer"
               >
                 <Link href={collection.href}>
-                  <div className="relative aspect-[3/4] overflow-hidden mb-8 bg-gray-100 shadow-xl">
+                  <div className="image-container aspect-3-4 overflow-hidden mb-8 bg-gray-100 shadow-xl">
                     <Image
                       src={collection.image}
                       alt={collection.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={index === 0}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-6 left-6 right-6">
+                    <div className="absolute bottom-6 left-6 right-6 text-container">
                       <h3 className="text-2xl md:text-3xl font-light text-white mb-2 tracking-wide">
                         {collection.title}
                       </h3>
@@ -213,24 +222,24 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       </section>
 
       {/* Luxury Video Showcase - Using Images Instead of Videos */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="responsive-section bg-white">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-16 text-container"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight">
+            <h2 className="responsive-heading font-light text-gray-900 mb-6 tracking-tight">
               Craftsmanship Stories
             </h2>
             <div className="w-16 h-px bg-gray-900 mx-auto mb-8" />
-            <p className="text-gray-700 text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed">
+            <p className="responsive-text text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
               Behind every piece lies exceptional artistry and decades of experience
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 stable-grid">
             {luxuryVideos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -264,31 +273,31 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
       </section>
 
       {/* Featured Products - Enhanced Grid */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="responsive-section bg-gray-50">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-16 text-container"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight">
+            <h2 className="responsive-heading font-light text-gray-900 mb-6 tracking-tight">
               Featured Pieces
             </h2>
             <div className="w-16 h-px bg-gray-900 mx-auto mb-8" />
-            <p className="text-gray-700 text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed">
+            <p className="responsive-text text-gray-700 font-light max-w-xl mx-auto leading-relaxed">
               Handpicked selections from our master craftsmen, showcasing the finest in contemporary menswear
             </p>
           </motion.div>
 
-          {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+          {loading || !isHydrated ? (
+            <div className="responsive-grid stable-grid">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="aspect-[3/4] bg-gray-200 animate-pulse rounded-lg" />
+                <div key={i} className="aspect-3-4 loading-placeholder" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
+            <div className="responsive-grid stable-grid mb-12">
               {featuredProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
@@ -298,17 +307,18 @@ export default function HomePageClient({ initialProducts = [] }: HomePageClientP
                   transition={{ delay: index * 0.1 }}
                   className="group cursor-pointer"
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden bg-white shadow-lg mb-4">
+                  <div className="image-container aspect-3-4 overflow-hidden bg-white shadow-lg mb-4">
                     <Image
                       src={product.image || `https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80`}
                       alt={product.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 33vw"
+                      priority={index < 3}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 text-container">
                     <h3 className="text-lg md:text-xl font-light text-gray-900 tracking-wide">
                       {product.name}
                     </h3>

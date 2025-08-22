@@ -5,6 +5,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* FOUC Prevention - Critical Styles First */
+@layer base {
+  /* Prevent flash of unstyled content */
+  html {
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+  html.fonts-loaded {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Fallback for when fonts fail to load */
+  html:not(.fonts-loaded) {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Base layout stabilization */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Fonts loaded state */
+  .fonts-loaded body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
 /* Chat mobile styles */
 @import '../styles/chat-mobile.css';
 

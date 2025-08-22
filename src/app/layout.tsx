@@ -87,13 +87,32 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(socialMediaSchema) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Font loading optimization
+              (function() {
+                function addFontClass() {
+                  document.documentElement.classList.add('fonts-loaded');
+                }
+                
+                if (document.fonts && document.fonts.ready) {
+                  document.fonts.ready.then(addFontClass);
+                } else {
+                  // Fallback for browsers without font loading API
+                  setTimeout(addFontClass, 100);
+                }
+              })();
+            `
+          }}
+        />
       </head>
       <body className="antialiased">
         <SkipLinks />
         {/* <PostHogProvider> */}
           <Providers>
             <Navigation />
-            <main id="main-content" className="pt-16 min-h-screen" role="main" aria-label="Main content">
+            <main id="main-content" className="flex-1 min-h-screen" role="main" aria-label="Main content" style={{ paddingTop: '80px' }}>
               {children}
             </main>
             <Footer />

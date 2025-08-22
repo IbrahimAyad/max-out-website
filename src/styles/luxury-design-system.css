@@ -254,14 +254,19 @@ button {
    UTILITY CLASSES
    =========================================== */
 
-/* Container Classes */
+/* ===========================================
+   RESPONSIVE BREAKPOINTS - Enhanced Stability
+   =========================================== */
+
+/* Smooth container transitions */
 .container {
   width: 100%;
   max-width: var(--container-2xl);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+  transition: padding var(--transition-fast);
 }
 
 .container-sm {
@@ -280,10 +285,85 @@ button {
   max-width: var(--container-xl);
 }
 
+/* Progressive enhancement for larger screens */
+@media (min-width: 640px) {
+  .container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
 @media (min-width: 768px) {
   .container {
     padding-left: var(--space-8);
     padding-right: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--space-10);
+    padding-right: var(--space-10);
+  }
+}
+
+/* Responsive typography that scales smoothly */
+.responsive-text {
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-xl));
+  line-height: var(--leading-relaxed);
+}
+
+.responsive-heading {
+  font-size: clamp(var(--text-2xl), 5vw, var(--text-5xl));
+  line-height: var(--leading-tight);
+}
+
+/* Responsive grid with smooth transitions */
+.responsive-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  transition: gap var(--transition-fast);
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Responsive spacing */
+.responsive-section {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+  transition: padding var(--transition-fast);
+}
+
+@media (min-width: 768px) {
+  .responsive-section {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-section {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-20);
   }
 }
 
@@ -429,24 +509,38 @@ button {
 .btn-loading {
   position: relative;
   color: transparent;
+  /* Prevent layout shift during loading */
+  min-width: fit-content;
 }
 
 .btn-loading::after {
   content: '';
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: 16px;
   height: 16px;
+  margin: -8px 0 0 -8px;
   border: 2px solid transparent;
   border-top: 2px solid currentColor;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
-/* Product Grid Layouts */
+/* Product Grid Layouts - Enhanced Stability */
 .product-grid {
   display: grid;
   gap: var(--space-6);
   grid-template-columns: 1fr;
+  /* Add containment for better performance */
+  contain: layout style;
+  min-height: 200px; /* Prevent collapse */
+}
+
+.product-grid-item {
+  /* Ensure stable dimensions */
+  min-height: 300px;
+  contain: layout style;
 }
 
 @media (min-width: 480px) {
@@ -474,19 +568,23 @@ button {
   }
 }
 
-/* Luxury Header */
+/* Luxury Header - Enhanced Stability */
 .luxury-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  height: 80px;
   background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Removed problematic backdrop-filter that causes rendering issues */
   border-bottom: 1px solid rgba(139, 38, 53, 0.08);
   box-shadow: var(--shadow-sm);
   z-index: var(--z-50);
-  transition: all var(--transition-luxury);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  /* Add containment for better performance */
+  contain: layout style;
+  will-change: box-shadow, border-color;
 }
 
 .luxury-header.scrolled {
@@ -499,10 +597,13 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 100%;
+  min-height: 80px;
   max-width: var(--container-2xl);
   margin: 0 auto;
   padding: 0 var(--space-6);
+  /* Prevent layout shifts */
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -511,10 +612,12 @@ button {
   }
 }
 
-/* Navigation */
+/* Navigation - Enhanced Stability */
 .main-nav {
   display: none;
   gap: var(--space-8);
+  align-items: center;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -529,9 +632,14 @@ button {
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   color: var(--neutral-700);
-  padding: var(--space-3) 0;
+  padding: var(--space-3) var(--space-2);
   position: relative;
   transition: color var(--transition-fast);
+  white-space: nowrap;
+  /* Prevent layout shifts */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link:hover {
@@ -542,15 +650,18 @@ button {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 0;
+  left: var(--space-2);
+  right: var(--space-2);
+  width: calc(100% - var(--space-4));
   height: 2px;
   background: var(--burgundy-800);
-  transition: width var(--transition-luxury);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast);
 }
 
 .nav-link:hover::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 /* ===========================================
@@ -695,11 +806,77 @@ button {
 .transition-slow { transition: all var(--transition-slow); }
 .transition-luxury { transition: all var(--transition-luxury); }
 
-/* Aspect Ratios */
-.aspect-square { aspect-ratio: 1 / 1; }
-.aspect-3-4 { aspect-ratio: 3 / 4; }
-.aspect-4-3 { aspect-ratio: 4 / 3; }
-.aspect-16-9 { aspect-ratio: 16 / 9; }
+/* Aspect Ratios - Enhanced for Layout Stability */
+.aspect-square { 
+  aspect-ratio: 1 / 1;
+  contain: layout;
+}
+.aspect-3-4 { 
+  aspect-ratio: 3 / 4;
+  contain: layout;
+}
+.aspect-4-3 { 
+  aspect-ratio: 4 / 3;
+  contain: layout;
+}
+.aspect-16-9 { 
+  aspect-ratio: 16 / 9;
+  contain: layout;
+}
+
+/* Layout Stability Utilities */
+.stable-layout {
+  contain: layout style;
+  will-change: auto;
+}
+
+.stable-grid {
+  display: grid;
+  contain: layout style;
+  min-height: fit-content;
+}
+
+.stable-flex {
+  display: flex;
+  contain: layout style;
+}
+
+/* Prevent layout shifts during loading */
+.loading-placeholder {
+  background: linear-gradient(90deg, var(--neutral-200) 25%, var(--neutral-100) 50%, var(--neutral-200) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  min-height: inherit;
+  border-radius: var(--radius-lg);
+}
+
+/* Image containers to prevent layout shifts */
+.image-container {
+  position: relative;
+  overflow: hidden;
+  contain: layout style;
+  background-color: var(--neutral-100);
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-medium);
+}
+
+/* Text containers to prevent reflow */
+.text-container {
+  contain: layout style;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Section containers for stable layouts */
+.section-container {
+  contain: layout style;
+  min-height: fit-content;
+}
 
 /* Hide/Show on Mobile */
 @media (max-width: 767px) {
